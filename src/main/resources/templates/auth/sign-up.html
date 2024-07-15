@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iReserve - Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+<nav class="bg-white shadow-lg">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="font-bold text-2xl text-indigo-600">iReserve</a>
+                </div>
+            </div>
+            <div class="flex items-center space-x-7">
+                <a href="/login" class="text-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-100 hover:text-indigo-900 px-10 py-2 border border-indigo-700 rounded-md">Login</a>
+                <a href="/sign-up" class="bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white hover:bg-indigo-700 px-10 py-2 rounded-md">Sign Up</a>
+            </div>
+        </div>
+    </div>
+</nav>
+<section class="bg-white py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="text-center">
+            <h1 class="text-4xl font-extrabold text-gray-900 leading-tight">Welcome to iReserve</h1>
+            <p class="mt-4 text-xl text-gray-600">Book your reservations with ease!</p>
+            <div class="mt-6">
+                <a href="/sign-up" class="bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-700 text-white px-6 py-3 rounded-md text-lg">Get Started</a>
+            </div>
+        </div>
+    </div>
+</section>
+<section id="signup" class="bg-gray-100 py-20">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+            <div class="col-span-2 bg-white shadow-sm rounded-3xl p-6 block relative">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Create Your Account</h2>
+                <form action="#" method="POST" class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" id="username" name="username" autocomplete="username" required
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <div class="pb-12">
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" name="password" autocomplete="new-password" required
+                               class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    </div>
+                    <button type="submit" class="block absolute bottom-0 italic right-0 w-fit bg-indigo-600 text-white hover:bg-indigo-700 inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium text-md">Create</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<footer class="bg-gray-800 py-12">
+    <div class="max-w-7xl mx-auto px-4">
+        <div class="flex justify-between items-center">
+            <p class="text-gray-400">© 2024 iReserve. All rights reserved.</p>
+            <div>
+                <a href="#" class="text-gray-400 hover:text-white px-3 py-2">Privacy Policy</a>
+                <a href="#" class="text-gray-400 hover:text-white px-3 py-2">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
