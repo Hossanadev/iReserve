@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class Auth {
-    @GetMapping("sign-up")
+    @GetMapping("/sign-up")
     public String signUp(Model model) {
         model.addAttribute("userRequest", new UserRequest());
         return "auth/sign-up";
@@ -23,7 +23,7 @@ public class Auth {
         return "auth/login";
     }
 
-    @PostMapping("/auth/sign-up")
+    @PostMapping("/sign-up")
     public String signUp(@Valid @ModelAttribute UserRequest userRequest, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userRequest", userRequest);
@@ -32,7 +32,7 @@ public class Auth {
         return "auth/login";
     }
 
-    @PostMapping("/auth/login")
+    @PostMapping("/login")
     public String login(@Valid @ModelAttribute UserRequest userRequest, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userRequest", userRequest);
