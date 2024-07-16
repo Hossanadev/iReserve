@@ -18,7 +18,8 @@ public class Auth {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(Model model) {
+        model.addAttribute("userRequest", new UserRequest());
         return "auth/login";
     }
 
@@ -29,5 +30,14 @@ public class Auth {
             return "auth/sign-up";
         }
         return "auth/login";
+    }
+
+    @PostMapping("/auth/login")
+    public String login(@Valid @ModelAttribute UserRequest userRequest, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("userRequest", userRequest);
+            return "auth/login";
+        }
+        return "redirect:/app/index";
     }
 }
