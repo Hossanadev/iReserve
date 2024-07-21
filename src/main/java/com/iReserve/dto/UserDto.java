@@ -5,9 +5,9 @@ import lombok.Data;
 
 @Data
 public class UserDto {
-    @NotEmpty(message = "Username is required!")
+    @NotEmpty(message = "*Required!")
     private String username;
 
-    @NotEmpty(message = "Password is required!")
+    @NotEmpty(message = "*Required!")
     private String password;
 }

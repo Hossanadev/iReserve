@@ -26,18 +26,18 @@
             <h1 class="text-4xl font-extrabold text-center text-gray-900 leading-tight">New iReserve Account</h1>
             <div class="shadow-sm rounded-3xl p-6 block relative w-[80%] md:w-2/3 2xl:w-1/3 bg-gradient-to-br from-blue-100 to-gray-100 mx-auto p-10 m-10 duration-500 transition-all">
                 <h2 class="text-xl font-semibold text-gray-900 mb-4 italic">Fill form</h2>
-                <form action="/sign-up" method="POST" th:object="${userDto}" class="space-y-4">
+                <form th:action="@{/sign-up}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-4">
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="username" th:field="*{username}" name="username" autocomplete="username"
+                        <input type="text" id="username" th:field="*{username}" name="username"
                                class="mt-1 block w-full px-3 py-2 border border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <span th:if="${#fields.hasErrors('username')}" class="block text-sm text-start text-red-600" th:errors="*{username}"></span>
+                        <span th:if="${#fields.hasErrors('username')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{username}"></span>
                     </div>
                     <div class="pb-12">
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="text" id="password" th:field="*{password}" name="password" autocomplete="new-password"
+                        <input type="text" id="password" th:field="*{password}" name="password"
                                class="mt-1 block w-full px-3 py-2 border border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <span th:if="${#fields.hasErrors('password')}" class="block text-sm text-start text-red-600" th:errors="*{password}"></span>
+                        <span th:if="${#fields.hasErrors('password')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{password}"></span>
                     </div>
                     <button type="submit" class="block absolute bottom-0 italic right-0 w-fit bg-indigo-600 text-white hover:bg-indigo-700 inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium text-md">Create</button>
                 </form>
@@ -48,14 +48,14 @@
         </section>
         <footer class="bg-gray-800 py-12">
             <div class="max-w-7xl mx-auto px-4">
-                <div class="flex justify-between items-center">
+                <div class="sm:flex justify-between items-center">
                     <p class="text-gray-400">© 2024 iReserve. All rights reserved.</p>
-                    <div>
-                        <a href="#" class="text-gray-400 hover:text-white px-3 py-2">Privacy Policy</a>
-                        <a href="#" class="text-gray-400 hover:text-white px-3 py-2">Terms of Service</a>
+                    <div class="max-sm:mt-4 max-sm:space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white sm:px-3 py-2">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white sm:px-3 py-2">Terms of Service</a>
                     </div>
                 </div>
             </div>
-    </footer>
+        </footer>
     </body>
 </html>

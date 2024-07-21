@@ -1,7 +1,9 @@
 package com.iReserve.controller;
 
 import com.iReserve.dto.UserDto;
+import com.iReserve.service.UserServiceImpl;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,6 +13,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class Auth {
+
+    private final UserServiceImpl userServiceImpl;
+
+    @Autowired
+    public Auth(UserServiceImpl userServiceImpl) {
+        this.userServiceImpl = userServiceImpl;
+    }
+
     @GetMapping("/sign-up")
     public String signUp(Model model) {
         model.addAttribute("userDto", new UserDto());
@@ -29,15 +39,8 @@ public class Auth {
             model.addAttribute("userDto", userDto);
             return "auth/sign-up";
         }
+        String message = userServiceImpl.createUser(userDto);
+        model.addAttribute("message", message);
         return "auth/login";
-    }
-
-    @PostMapping("/login")
-    public String login(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model) {
-        if (bindingResult.hasErrors()) {
-            model.addAttribute("userDto", userDto);
-            return "auth/login";
-        }
-        return "redirect:/app/index";
     }
 }
