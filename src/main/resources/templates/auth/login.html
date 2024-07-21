@@ -33,12 +33,12 @@
                 <form th:action="@{/login}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-4">
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-                        <input type="text" id="username" th:field="*{username}" name="username" required
+                        <input type="text" id="username" th:field="*{username}" name="username"
                                class="mt-1 block w-full px-3 py-2 bg-white bg-transparent border border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <div class="pb-12">
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
-                        <input type="text" id="password" th:field="*{password}" name="password" required
+                        <input type="text" id="password" th:field="*{password}" name="password"
                                class="mt-1 block w-full bg-white bg-transparent px-3 py-2 border border-gray-100 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                     </div>
                     <button th:id="login-btn" type="submit" class="block absolute bottom-0 italic right-0 w-fit bg-indigo-600 text-white hover:bg-indigo-700 inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium text-md">Login</button>
@@ -60,6 +60,5 @@
             </div>
         </footer>
         <script src="https://cdn.tailwindcss.com"></script>
-        <script th:src="@{../static/js/login.js}"></script>
     </body>
 </html>
