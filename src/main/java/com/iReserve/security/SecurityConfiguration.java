@@ -36,11 +36,17 @@ public class SecurityConfiguration {
                     .requestMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest().authenticated()
             )
-            .formLogin(form ->
-                    form.loginPage("/login")
-                        .failureUrl("/login?error")
-                        .defaultSuccessUrl("/app/index", true))
-            .logout(config -> config.logoutSuccessUrl("/"))
+            .formLogin(form -> form
+                    .loginPage("/login")
+                    .failureUrl("/login?error")
+                    .defaultSuccessUrl("/app/index", true)
+            )
+            .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID")
+            )
             .build();
         }
 }
