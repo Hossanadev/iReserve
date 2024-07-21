@@ -1,4 +1,4 @@
-package com.iReserve.model;
+package com.iReserve.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;

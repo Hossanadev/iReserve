@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 
 @Data
-public class UserRequest {
+public class UserDto {
     @NotEmpty(message = "Username is required!")
     private String username;
 

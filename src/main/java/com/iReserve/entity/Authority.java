@@ -1,4 +1,4 @@
-package com.iReserve.model;
+package com.iReserve.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,16 +8,13 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.time.LocalDateTime;
 
 @Data
-@Entity
-@Table(name = "users")
-public class User {
+@Entity(name = "authorities")
+public class Authority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
-    private String username;
-
+    @Column(nullable = false)
     private String password;
 
     @CreationTimestamp

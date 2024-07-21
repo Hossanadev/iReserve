@@ -1,6 +1,6 @@
 package com.iReserve.controller;
 
-import com.iReserve.dto.UserRequest;
+import com.iReserve.dto.UserDto;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,29 +13,29 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class Auth {
     @GetMapping("/sign-up")
     public String signUp(Model model) {
-        model.addAttribute("userRequest", new UserRequest());
+        model.addAttribute("userDto", new UserDto());
         return "auth/sign-up";
     }
 
     @GetMapping("/login")
     public String login(Model model) {
-        model.addAttribute("userRequest", new UserRequest());
+        model.addAttribute("userDto", new UserDto());
         return "auth/login";
     }
 
     @PostMapping("/sign-up")
-    public String signUp(@Valid @ModelAttribute UserRequest userRequest, BindingResult bindingResult, Model model) {
+    public String signUp(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("userRequest", userRequest);
+            model.addAttribute("userDto", userDto);
             return "auth/sign-up";
         }
         return "auth/login";
     }
 
     @PostMapping("/login")
-    public String login(@Valid @ModelAttribute UserRequest userRequest, BindingResult bindingResult, Model model) {
+    public String login(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("userRequest", userRequest);
+            model.addAttribute("userDto", userDto);
             return "auth/login";
         }
         return "redirect:/app/index";
