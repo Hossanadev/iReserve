@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>iReserve - Login</title>
     </head>
-    <body class="bg-gray-100">
+    <body class="bg-gray-100 tracking-[0.1em]">
         <nav class="bg-white py-3">
             <div class="max-w-7xl mx-auto px-4">
                 <div class="flex justify-between h-16">
@@ -23,10 +23,10 @@
     </nav>
         <section class="bg-white py-20">
             <h1 class="text-4xl font-extrabold text-center text-gray-900 leading-tight">Log into iReserve</h1>
-            <div class="shadow-sm rounded-3xl p-6 block relative w-[80%] md:w-2/3 2xl:w-1/3 bg-gradient-to-br from-blue-500 to-gray-50 mx-auto p-10 m-10 duration-500 transition-all">
+            <div class="shadow-sm rounded-3xl p-6 block relative w-[80%] md:w-2/3 2xl:w-1/3 bg-gradient-to-br from-gray-300 to-gray-50 mx-auto p-10 m-10 duration-500 transition-all">
                 <div th:if="${param.error}" class="flex justify-center items-center -mx-6">
                     <div class="h-0.5 bg-white w-full"></div>
-                    <div class="text-white p-2 bg-red-600 rounded-md transform font-medium text-center w-full text-sm -skew-x-12">Invalid Credentials!</div>
+                    <div class="text-white p-2 bg-red-600 transform font-medium text-center w-full text-sm -skew-x-12">Invalid Credentials!</div>
                     <div class="h-0.5 bg-white w-full"></div>
                 </div>
                 <form th:action="@{/login}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-4">

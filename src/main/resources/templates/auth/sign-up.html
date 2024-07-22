@@ -6,7 +6,7 @@
         <title>iReserve - Sign Up</title>
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="bg-gray-100">
+    <body class="bg-gray-100 tracking-[0.1em]">
         <nav class="bg-white py-3">
         <div class="max-w-7xl mx-auto px-4">
             <div class="flex justify-between h-16">
@@ -24,7 +24,7 @@
         </nav>
         <section class="bg-white py-20">
             <h1 class="text-4xl font-extrabold text-center text-gray-900 leading-tight">New iReserve Account</h1>
-            <div class="shadow-sm rounded-3xl p-6 block relative w-[80%] md:w-2/3 2xl:w-1/3 bg-gradient-to-br from-blue-500 to-gray-50 mx-auto p-10 m-10 duration-500 transition-all">
+            <div class="shadow-sm rounded-3xl p-6 block relative w-[80%] md:w-2/3 2xl:w-1/3 bg-gradient-to-br from-gray-300 to-gray-50 mx-auto p-10 m-10 duration-500 transition-all">
                 <form th:action="@{/sign-up}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-4">
                     <div>
                         <label for="username" class="block text-sm font-medium text-gray-700 w-fit"></label>
