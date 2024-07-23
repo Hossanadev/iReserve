@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/app")
 public class Home {
 
-    @GetMapping("/index")
+    @GetMapping("")
     public String index(Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (!authentication.isAuthenticated() || authentication instanceof AnonymousAuthenticationToken) {
