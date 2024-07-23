@@ -37,8 +37,8 @@ public class SecurityConfiguration {
                     .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                    .loginPage("/login")
-                    .failureUrl("/login?error")
+                    .loginPage("/")
+                    .loginProcessingUrl("/login")
                     .defaultSuccessUrl("/app", true)
             )
             .logout(logout -> logout

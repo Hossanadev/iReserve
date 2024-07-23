@@ -21,26 +21,21 @@ public class Auth {
         this.userServiceImpl = userServiceImpl;
     }
 
-    @GetMapping("/sign-up")
-    public String signUp(Model model) {
+    @GetMapping("/")
+    public String index(Model model) {
         model.addAttribute("userDto", new UserDto());
-        return "auth/sign-up";
-    }
-
-    @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("userDto", new UserDto());
-        return "auth/login";
+        return "index";
     }
 
     @PostMapping("/sign-up")
     public String signUp(@Valid @ModelAttribute UserDto userDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("userDto", userDto);
-            return "auth/sign-up";
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "index";
         }
         String message = userServiceImpl.createUser(userDto);
         model.addAttribute("message", message);
-        return "auth/login";
+        return "index";
     }
 }
