@@ -1,7 +1,9 @@
 package com.iReserve.controller;
 
 import com.iReserve.dto.UserDto;
+import com.iReserve.entity.User;
 import com.iReserve.service.UserServiceImpl;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,16 +15,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class Auth {
-
+    private final HttpSession httpSession;
     private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public Auth(UserServiceImpl userServiceImpl) {
+    public Auth(UserServiceImpl userServiceImpl, HttpSession httpSession) {
         this.userServiceImpl = userServiceImpl;
+        this.httpSession = httpSession;
     }
 
     @GetMapping("/")
     public String index(Model model) {
+        User user = (User) httpSession.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("hasActiveSession", true);
+        } else {
+            model.addAttribute("hasActiveSession", false);
+        }
         model.addAttribute("userDto", new UserDto());
         return "index";
     }

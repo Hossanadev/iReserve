@@ -12,12 +12,12 @@
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="/" class="font-bold text-2xl text-[#008000]">iReserve</a>
+                            <a href="/" class="font-bold text-2xl text-primary">iReserve</a>
                         </div>
                     </div>
                     <div class="flex items-center space-x-7">
-                        <p id="login-btn" class="cursor-pointer text-indigo-700 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-100 hover:text-indigo-900 px-10 py-1.5 border border-indigo-700 rounded-md">Login</p>
-                        <p id="signup-btn" class="cursor-pointer bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white hover:bg-indigo-700 px-10 py-1.5 rounded-md">Sign Up</p>
+                        <button id="login-btn" th:text="${hasActiveSession == true ? 'Dashboard' : 'Login'}" class="cursor-pointer text-primary focus:ring-2 focus:ring-offset-2 focus:ring-primary hover:bg-secondary hover:text-primary px-10 py-1.5 border border-primary rounded-md"></button>
+                        <button id="signup-btn" class="cursor-pointer bg-primary focus:ring-2 focus:ring-offset-2 focus:ring-primary text-white hover:bg-primary px-10 py-1.5 rounded-md">Sign Up</button>
                     </div>
                 </div>
             </div>
@@ -28,23 +28,24 @@
                     <h1 class="text-4xl font-bold text-gray-800 leading-tight">Welcome to iReserve</h1>
                     <p class="mt-4 text-xl text-gray-600">Book your reservations with ease!</p>
                     <div class="mt-6">
-                        <a id="get-started" href="/sign-up" class="bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 hover:bg-indigo-700 text-white px-6 py-3 rounded-md text-lg">Get Started</a>
+                        <button id="get-started" class="bg-primary cursor-pointer focus:ring-2 focus:ring-offset-2 focus:ring-primary hover:bg-primary text-white px-6 py-3 rounded-md text-lg">Get Started</button>
                     </div>
                 </div>
             </div>
         </section>
         <section class="bg-gray-100 py-20">
+            <span id="has-active-session" th:if="${hasActiveSession}" class="hidden"></span>
             <div class="max-w-7xl mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="bg-gradient-to-br from-blue-100 to-gray-100 shadow-sm rounded-lg p-6">
+                    <div class="bg-gradient-to-br from-secondary to-gray-100 shadow-sm rounded-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">Easy Booking Process</h2>
                         <p class="text-gray-600">Our simple and intuitive booking system makes reservations hassle-free.</p>
                     </div>
-                    <div class="bg-gradient-to-br from-blue-100 to-gray-100 shadow-sm rounded-lg p-6">
+                    <div class="bg-gradient-to-br from-secondary to-gray-100 shadow-sm rounded-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">Flexible Options</h2>
                         <p class="text-gray-600">Choose from a variety of options and customize your reservations.</p>
                     </div>
-                    <div class="bg-gradient-to-br from-blue-100 to-gray-100 shadow-sm rounded-lg p-6">
+                    <div class="bg-gradient-to-br from-secondary to-gray-100 shadow-sm rounded-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">24/7 Support</h2>
                         <p class="text-gray-600">Need help? Our support team is available to assist you.</p>
                     </div>
@@ -64,7 +65,7 @@
         </footer>
         <div id="login-modal" style="color: #696969; background-color: #19191940; border-color: #292929" class="hidden text-sm modal fixed inset-0 bg-opacity-10 backdrop-filter backdrop-blur-md border border-opacity-30 flex items-center justify-center z-30">
             <div style="min-height: fit-content; background-color: #fafafa" class="w-[80%] md:w-2/3 2xl:w-1/3 relative rounded-3xl shadow-sm border border-gray-7">
-                <p class="text-2xl text-indigo-500 font-medium text-center opacity-100 my-4">Login</p>
+                <p class="text-2xl text-primary font-medium text-center opacity-100 my-4">Login</p>
                 <hr style="color: #292929" class="h-1" />
                 <div class="shadow-sm rounded-b-3xl p-6 block relative">
                     <form th:action="@{/login}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-2 w-full">
@@ -73,17 +74,17 @@
                         <div>
                             <label for="username" class="block text-sm font-medium text-gray-700 w-fit">Username</label>
                             <input type="text" id="username" th:field="*{username}" placeholder="Username" name="username"
-                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-indigo-500  sm:text-sm">
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-primary  sm:text-sm">
                             <span class="block mt-1 text-[12px] text-start text-red-600"></span>
                         </div>
                         <div class="pb-8">
                             <label for="password" class="block text-sm font-medium text-gray-700 w-fit">Password</label>
                             <input type="text" placeholder="Password" th:field="*{password}" id="password"  name="password"
-                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-indigo-500  sm:text-sm">
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-primary  sm:text-sm">
                             <span class="block mt-1 text-[12px] text-start text-red-600"></span>
                         </div>
                         <button id="close-login-modal" type="button" class="text-md block absolute bottom-0 left-0 w-fit bg-red-500 text-white inline-flex justify-center rounded-bl-3xl rounded-tr-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 font-medium text-md">Cancel</button>
-                        <button type="submit" class="text-md block absolute bottom-0 right-0 w-fit bg-indigo-500 text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium text-md">Login</button>
+                        <button type="submit" class="text-md block absolute bottom-0 right-0 w-fit bg-primary text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-primary font-medium text-md">Login</button>
                     </form>
                     <hr style="color: #292929" class="h-1 pb-10 -mx-6" />
                 </div>
@@ -91,7 +92,7 @@
         </div>
         <div id="signup-modal" style="color: #696969; background-color: #19191940; border-color: #292929" class="hidden text-sm modal fixed inset-0 bg-opacity-10 backdrop-filter backdrop-blur-md border border-opacity-30 flex items-center justify-center z-30">
             <div style="min-height: fit-content; background-color: #fafafa" class="w-[80%] md:w-2/3 2xl:w-1/3 relative rounded-3xl shadow-sm border border-gray-7">
-                <p class="text-2xl text-indigo-500 font-medium text-center opacity-100 my-4">Sign up</p>
+                <p class="text-2xl text-primary font-medium text-center opacity-100 my-4">Sign up</p>
                 <hr style="color: #292929" class="h-1" />
                 <div class="shadow-sm rounded-b-3xl p-6 block relative">
                     <form th:action="@{/sign-up}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-2 w-full">
@@ -110,7 +111,7 @@
                             <span th:if="${#fields.hasErrors('password')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{password}"></span>
                         </div>
                         <button id="close-signup-modal" type="button" class="text-md block absolute bottom-0 left-0 w-fit bg-red-500 text-white inline-flex justify-center rounded-bl-3xl rounded-tr-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 font-medium text-md">Cancel</button>
-                        <button type="submit" class="text-md block absolute bottom-0 right-0 w-fit bg-indigo-500 text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 font-medium text-md">Create</button>
+                        <button type="submit" class="text-md block absolute bottom-0 right-0 w-fit bg-primary text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-primary font-medium text-md">Create</button>
                     </form>
                     <hr style="color: #292929" class="h-1 pb-10 -mx-6" />
                 </div>
@@ -128,6 +129,7 @@
     const closeSignupModal = document.getElementById("close-signup-modal");
     const signupError = document.getElementById("signup-error");
     const getStarted = document.getElementById("get-started");
+    const hasActiveSession = document.getElementById("has-active-session");
 
     loginBtn.addEventListener("click", showLoginModal);
     closeLoginModal.addEventListener("click", hideLoginModal);
@@ -137,16 +139,22 @@
 
     function showLoginModal(e) {
         e.preventDefault();
+        if (hasActiveSession) {
+            return window.location.href = "/app";
+        }
         return loginModal.classList.remove("hidden");
     }
+
     function hideLoginModal(e) {
         e.preventDefault();
         return loginModal.classList.add("hidden");
     }
+
     function showSignupModal(e) {
         e.preventDefault()
         return signupModal.classList.remove("hidden");
     }
+
     function hideSignupModal(e) {
         e.preventDefault();
         return signupModal.classList.add("hidden");
@@ -157,5 +165,18 @@
     }
     if (signupError) {
         signupModal.classList.remove("hidden");
+    }
+
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    primary: '#008000',
+                    secondary: '#00800025',
+                    danger: '#E62C46',
+                    lightgray: '#19191915'
+                }
+            }
+        }
     }
 </script>
