@@ -5,7 +5,7 @@ import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
 @Entity
@@ -15,6 +15,8 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long user_id;
+
     private String trainNumber;
 
     private String trainName;
@@ -23,15 +25,15 @@ public class Reservation {
 
     private String reservationClass;
 
-    private LocalDateTime reservationDate;
+    private LocalDate reservationDate;
 
     private String destinationFrom;
 
     private String destinationTo;
 
     @CreationTimestamp
-    private LocalDateTime createdAt;
+    private LocalDate createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private LocalDate updatedAt;
 }
