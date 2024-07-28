@@ -68,23 +68,21 @@
                 <p class="text-xl text-primary font-medium text-center opacity-100 my-4">Login</p>
                 <hr style="color: #292929" class="h-1" />
                 <div class="shadow-sm rounded-b-3xl p-6 block relative">
-                    <form th:action="@{/login}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-2 w-full">
+                    <form th:action="@{/login}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-3 w-full">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <p id="login-error-msg" th:if="${param.error}" class="text-red-600 transform font-medium text-center w-full text-md">Invalid Credentials</p>
                         <div>
                             <label for="username" class="block text-sm font-medium text-gray-700 w-fit">Username*</label>
                             <input type="text" id="username" th:field="*{username}" placeholder="Username" name="username"
                                    class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-primary  sm:text-sm">
-                            <span class="block mt-1 text-[12px] text-start text-red-600"></span>
                         </div>
                         <div class="pb-8">
                             <label for="password" class="block text-sm font-medium text-gray-700 w-fit">Password*</label>
                             <input type="password" placeholder="Password" th:field="*{password}" id="password"  name="password"
                                    class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-primary  sm:text-sm">
-                            <span class="block mt-1 text-[12px] text-start text-red-600"></span>
                         </div>
                         <button id="close-login-modal" type="button" class="text-md block absolute bottom-0 left-0 w-fit bg-red-500 text-white inline-flex justify-center rounded-bl-3xl rounded-tr-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 font-medium text-md">Cancel</button>
-                        <button type="submit" class="text-md block absolute bottom-0 right-0 w-fit bg-primary text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-primary font-medium text-md">Login</button>
+                        <button id="login" disabled type="submit" class="disabled:cursor-not-allowed text-md block absolute bottom-0 right-0 w-fit bg-primary text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-primary font-medium text-md">Login</button>
                     </form>
                     <hr style="color: #292929" class="h-1 pb-10 -mx-6" />
                 </div>
@@ -95,7 +93,7 @@
                 <p class="text-xl text-primary font-medium text-center opacity-100 my-4">Sign up</p>
                 <hr style="color: #292929" class="h-1" />
                 <div class="shadow-sm rounded-b-3xl p-6 block relative">
-                    <form th:action="@{/sign-up}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-2 w-full">
+                    <form th:action="@{/sign-up}" th:method="post" th:object="${userDto}" autocomplete="off" class="space-y-3 w-full">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
                         <span id="signup-error" th:if="${#fields.hasAnyErrors()}"></span>
                         <div>
@@ -130,12 +128,17 @@
     const signupError = document.getElementById("signup-error");
     const getStarted = document.getElementById("get-started");
     const hasActiveSession = document.getElementById("has-active-session");
+    const username = document.getElementById("username");
+    const password = document.getElementById("password");
+    const login = document.getElementById("login");
 
     loginBtn.addEventListener("click", showLoginModal);
     closeLoginModal.addEventListener("click", hideLoginModal);
     signupBtn.addEventListener("click", showSignupModal);
     closeSignupModal.addEventListener("click", hideSignupModal)
     getStarted.addEventListener("click", showSignupModal);
+    username.addEventListener("input", validateLoginInput);
+    password.addEventListener("input", validateLoginInput);
 
     function showLoginModal(e) {
         e.preventDefault();
@@ -144,20 +147,21 @@
         }
         return loginModal.classList.remove("hidden");
     }
-
     function hideLoginModal(e) {
         e.preventDefault();
         return loginModal.classList.add("hidden");
     }
-
     function showSignupModal(e) {
         e.preventDefault()
         return signupModal.classList.remove("hidden");
     }
-
     function hideSignupModal(e) {
         e.preventDefault();
         return signupModal.classList.add("hidden");
+    }
+    function validateLoginInput() {
+        login.disabled = username.value.trim() === ''
+            || password.value.trim() === '';
     }
 
     if (loginErrorMsg) {
