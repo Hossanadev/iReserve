@@ -33,19 +33,19 @@
                 </div>
             </div>
         </section>
-        <section class="bg-gray-100 py-20">
+        <section class="bg-lightgray py-20">
             <span id="has-active-session" th:if="${hasActiveSession}" class="hidden"></span>
             <div class="max-w-7xl mx-auto px-4">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-                    <div class="bg-gradient-to-br from-secondary to-gray-100 shadow-sm rounded-lg p-6">
+                    <div class="bg-gradient-to-br from-white to-secondary shadow-sm rounded-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">Easy Booking Process</h2>
                         <p class="text-gray-600">Our simple and intuitive booking system makes reservations hassle-free.</p>
                     </div>
-                    <div class="bg-gradient-to-br from-secondary to-gray-100 shadow-sm rounded-lg p-6">
+                    <div class="bg-gradient-to-br from-white to-secondary shadow-sm rounded-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">Flexible Options</h2>
                         <p class="text-gray-600">Choose from a variety of options and customize your reservations.</p>
                     </div>
-                    <div class="bg-gradient-to-br from-secondary to-gray-100 shadow-sm rounded-lg p-6">
+                    <div class="bg-gradient-to-br from-white to-secondary shadow-sm rounded-lg p-6">
                         <h2 class="text-xl font-semibold text-gray-900 mb-4">24/7 Support</h2>
                         <p class="text-gray-600">Need help? Our support team is available to assist you.</p>
                     </div>
@@ -79,7 +79,7 @@
                         </div>
                         <div class="pb-8">
                             <label for="password" class="block text-sm font-medium text-gray-700 w-fit">Password*</label>
-                            <input type="text" placeholder="Password" th:field="*{password}" id="password"  name="password"
+                            <input type="password" placeholder="Password" th:field="*{password}" id="password"  name="password"
                                    class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:border-primary  sm:text-sm">
                             <span class="block mt-1 text-[12px] text-start text-red-600"></span>
                         </div>
@@ -106,7 +106,7 @@
                         </div>
                         <div class="pb-8">
                             <label for="signup-password" class="block text-sm font-medium text-gray-700 w-fit">Password*</label>
-                            <input type="text" placeholder="Password" th:field="*{password}" id="signup-password" name="password"
+                            <input type="password" placeholder="Password" th:field="*{password}" id="signup-password" name="password"
                                    class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
                             <span th:if="${#fields.hasErrors('password')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{password}"></span>
                         </div>
@@ -174,7 +174,7 @@
                     primary: '#008000',
                     secondary: '#00800025',
                     danger: '#E62C46',
-                    lightgray: '#19191915'
+                    lightgray: '#19191905'
                 }
             }
         }

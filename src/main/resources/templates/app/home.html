@@ -1,104 +1,108 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>iReserve | Dashboard</title>
-    <script src="/tailwind-config.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gray-100 tracking-[0.1em]">
-<nav class="bg-white py-3">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <div class="flex items-center space-x-8">
-                    <a href="/app" class="font-bold text-2xl text-primary">iReserve</a>
-                    <p class="flex item-center text-xl text-gray-600 font-semibold" th:text="' Hi ' + ${user.username} + ', you\'re welcome!' "></p>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>iReserve | Dashboard</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script src="/tailwind-config.js"></script>
+    </head>
+    <body class="bg-lightgray tracking-[0.1em]">
+        <nav class="bg-white py-3">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="flex justify-between h-16">
+                    <div class="flex">
+                        <div class="flex items-center space-x-8">
+                            <a href="/app" class="font-bold text-2xl text-primary">iReserve</a>
+                            <p class="flex item-center text-xl text-gray-600 font-semibold" th:text="' Hi ' + ${user.username} + ', you\'re welcome!' "></p>
+                        </div>
+                    </div>
+                    <div class="hidden md:flex items-center space-x-7">
+                        <form th:action="@{/logout}" method="post">
+                            <input class="hidden" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                            <button class="bg-red-600 text-white px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 rounded-md" type="submit">Logout</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="hidden md:flex items-center space-x-7">
-                <form th:action="@{/logout}" method="post">
-                    <input class="hidden" type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                    <button class="bg-red-600 text-white px-10 py-1.5 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 rounded-md" type="submit">Logout</button>
-                </form>
+        </nav>
+        <main class="py-10">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-gradient-to-br from-white to-secondary shadow-sm flex item-center space-x-4 rounded-lg p-6">
+                        <div class="bg-white p-3 rounded-full h-fit w-fit">
+                            <ion-icon class="text-2xl block text-primary" name="person-outline"></ion-icon>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900">Users</h2>
+                            <p class="text-gray-600 text-lg font-semibold">500</p>
+                        </div>
+                    </div>
+                    <div class="bg-gradient-to-br from-white to-secondary shadow-sm flex item-center space-x-4 rounded-lg p-6">
+                        <div class="bg-white p-3 rounded-full h-fit w-fit">
+                            <ion-icon class="text-2xl block text-primary" name="reader-outline"></ion-icon>
+                        </div>
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-900">Bookings</h2>
+                            <p class="text-gray-600 text-lg font-semibold">1200</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-28 bg-white py-5 rounded-2xl relative">
+                    <div class="flex justify-between item-center">
+                        <h2 class="text-xl font-semibold text-gray-900 px-5 italic mb-4">Recent Logs</h2>
+                        <button class="absolute top-0 right-0 px-10 py-2 h-fit bg-primary focus:ring-2 focus:ring-offset-2 focus:ring-primary text-white rounded-bl-2xl rounded-tr-2xl" type="submit">Add</button>
+                    </div>
+                      <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white overflow-hidden">
+                            <thead class="bg-lightgray">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Booked By</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Train Name</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Train Number</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Class Type</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Date of Journey</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">From</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">To</th>
+                                <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="border-b border-lightgray">
+                                <td class="px-4 py-3 text-sm">John Doe</td>
+                                <td class="px-4 py-3 text-sm">Express Train</td>
+                                <td class="px-4 py-3 text-sm">12345</td>
+                                <td class="px-4 py-3 text-sm">First Class</td>
+                                <td class="px-4 py-3 text-sm">2024-07-22</td>
+                                <td class="px-4 py-3 text-sm">New York</td>
+                                <td class="px-4 py-3 text-sm">Los Angeles</td>
+                                <td class="px-4 space-x-4 py-3 text-sm">
+                                    <button class="text-blue-500 hover:text-blue-700">
+                                        <ion-icon title="Edit" class="text-lg" name="create-outline"></ion-icon>
+                                    </button>
+                                    <button class="text-red-500 hover:text-red-700">
+                                        <ion-icon title="Cancel" class="text-lg" name="trash-outline"></ion-icon>
+                                    </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-</nav>
-
-<main class="py-10">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="bg-gradient-to-br from-blue-100 to-gray-100 shadow-sm rounded-lg p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Users</h2>
-                <p class="text-gray-600 text-lg">500</p>
+        </main>
+        <footer class="bg-gray-800 py-12">
+            <div class="max-w-7xl mx-auto px-4">
+                <div class="sm:flex justify-between items-center">
+                    <p class="text-gray-400">© 2024 iReserve. All rights reserved.</p>
+                    <div class="max-sm:mt-4 max-sm:space-x-6">
+                        <a href="#" class="text-gray-400 hover:text-white sm:px-3 py-2">Privacy Policy</a>
+                        <a href="#" class="text-gray-400 hover:text-white sm:px-3 py-2">Terms of Service</a>
+                    </div>
+                </div>
             </div>
-            <div class="bg-gradient-to-br from-blue-100 to-gray-100 shadow-sm rounded-lg p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Bookings</h2>
-                <p class="text-gray-600 text-lg">1200</p>
-            </div>
-        </div>
-
-        <div class="my-28">
-            <div class="flex justify-between item-center">
-                <h2 class="text-2xl font-semibold text-gray-900 italic mb-4">Recent Logs</h2>
-                <button class="px-10 py-1.5 h-fit bg-indigo-600 focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 text-white hover:bg-indigo-700 rounded-md" type="submit">Add</button>
-            </div>
-              <div class="overflow-x-auto">
-                <table class="min-w-full bg-white shadow-sm rounded-lg overflow-hidden">
-                    <thead class="bg-gray-200">
-                    <tr>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Booked By</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Train Name</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Train Number</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Class Type</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Date of Journey</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">From</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">To</th>
-                        <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr class="border-b border-gray-200">
-                        <td class="px-4 py-3 text-sm">John Doe</td>
-                        <td class="px-4 py-3 text-sm">Express Train</td>
-                        <td class="px-4 py-3 text-sm">12345</td>
-                        <td class="px-4 py-3 text-sm">First Class</td>
-                        <td class="px-4 py-3 text-sm">2024-07-22</td>
-                        <td class="px-4 py-3 text-sm">New York</td>
-                        <td class="px-4 py-3 text-sm">Los Angeles</td>
-                        <td class="px-4 py-3 text-sm">
-                            <button class="text-blue-500 hover:text-blue-700">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M15.293 3.293a1 1 0 0 1 1.414 1.414l-10 10a1 1 0 0 1-1.414 0l-3-3a1 1 0 0 1 1.414-1.414l2.293 2.293 9-9z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                            <button class="text-red-500 hover:text-red-700">
-                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 6.707a1 1 0 0 1 1.414-1.414L10 8.586l3.293-3.293a1 1 0 1 1 1.414 1.414L11.414 10l3.293 3.293a1 1 0 0 1-1.414 1.414L10 11.414l-3.293 3.293a1 1 0 0 1-1.414-1.414L8.586 10 5.293 6.707z" clip-rule="evenodd" />
-                                </svg>
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</main>
-
-<footer class="bg-gray-800 py-12">
-    <div class="max-w-7xl mx-auto px-4">
-        <div class="sm:flex justify-between items-center">
-            <p class="text-gray-400">© 2024 iReserve. All rights reserved.</p>
-            <div class="max-sm:mt-4 max-sm:space-x-6">
-                <a href="#" class="text-gray-400 hover:text-white sm:px-3 py-2">Privacy Policy</a>
-                <a href="#" class="text-gray-400 hover:text-white sm:px-3 py-2">Terms of Service</a>
-            </div>
-        </div>
-    </div>
-</footer>
-
-</body>
+        </footer>
+        <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </body>
 </html>

@@ -5,7 +5,7 @@ tailwind.config = {
                 primary: '#008000',
                 secondary: '#00800010',
                 danger: '#E62C46',
-                lightgray: '#19191915'
+                lightgray: '#19191910'
             }
         }
     }
