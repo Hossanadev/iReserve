@@ -14,7 +14,7 @@
                     <div class="flex">
                         <div class="flex items-center space-x-8">
                             <a href="/app" class="font-bold text-2xl text-primary">iReserve</a>
-                            <p class="flex item-center text-xl text-gray-600 font-semibold" th:text="' Hi ' + ${user.username} + ', you\'re welcome!' "></p>
+                            <p class="flex item-center text-lg text-gray-600 capitalize font-semibold" th:text="' Hi ' + ${user.username} + ', ' + ${greetings}"></p>
                         </div>
                     </div>
                     <div class="hidden md:flex items-center space-x-7">
