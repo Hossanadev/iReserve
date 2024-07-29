@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class Auth {
+public class AuthController {
     private final HttpSession httpSession;
     private final UserServiceImpl userServiceImpl;
 
     @Autowired
-    public Auth(UserServiceImpl userServiceImpl, HttpSession httpSession) {
+    public AuthController(UserServiceImpl userServiceImpl, HttpSession httpSession) {
         this.userServiceImpl = userServiceImpl;
         this.httpSession = httpSession;
     }

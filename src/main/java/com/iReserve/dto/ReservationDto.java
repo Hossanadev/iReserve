@@ -1,6 +1,7 @@
 package com.iReserve.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,14 +16,12 @@ public class ReservationDto {
     private String trainName;
 
     @NotEmpty(message = "Required!")
-    private int seatNumber;
+    private String seatNumber;
 
     @NotEmpty(message = "Required!")
     private String reservationClass;
 
-    @NotEmpty(message = "Required!")
-
-    @NotEmpty(message = "Required!")
+    @NotNull(message = "Required!")
     @DateTimeFormat(pattern = "dd-MM-yyyy")
     private LocalDate reservationDate;
 

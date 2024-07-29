@@ -6,6 +6,7 @@ import com.iReserve.entity.User;
 import java.util.List;
 
 public interface UserService {
+    User findUserById(Long id);
     User findUserByUsername(String username);
     List<User> findAllUsers();
     String createUser(UserDto user);

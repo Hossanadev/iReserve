@@ -15,13 +15,15 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long user_id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     private String trainNumber;
 
     private String trainName;
 
-    private int seatNumber;
+    private String seatNumber;
 
     private String reservationClass;
 
