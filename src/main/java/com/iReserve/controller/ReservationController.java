@@ -59,6 +59,13 @@ public class ReservationController {
         return "redirect:/app";
     }
 
+    @PostMapping("/reservation/delete/{id}")
+    public String deleteReservation(@PathVariable Long id, Model model) {
+        reservationServiceImpl.deleteReservation(id);
+        updateUI(reservationServiceImpl, userServiceImpl, new ReservationDto(), model);
+        return "redirect:/app";
+    }
+
     public void updateUI(ReservationServiceImpl reservationServiceImpl, UserServiceImpl userServiceImpl, ReservationDto reservationDto, Model model) {
         User user = (User) httpSession.getAttribute("user");
         model.addAttribute("user", user);

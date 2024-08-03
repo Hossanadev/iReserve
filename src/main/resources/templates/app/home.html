@@ -53,8 +53,8 @@
                         <h2 class="text-xl font-semibold text-gray-900 px-5 mb-4" th:text="${noOfReservations > 1 ? 'Reservations' : 'Reservation'}"></h2>
                         <button id="add-reservation-btn" class="absolute cursor-pointer top-0 right-0 px-10 py-2 h-fit bg-primary focus:ring-2 focus:ring-offset-2 focus:ring-primary text-white rounded-bl-2xl rounded-tr-2xl" type="submit">Add</button>
                     </div>
-                      <div class="overflow-x-auto">
-                        <table class="min-w-full bg-white overflow-hidden">
+                      <div class="overflow">
+                        <table class="min-w-full bg-white">
                             <thead class="bg-lightgray">
                                 <tr>
                                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Booked By</th>
@@ -68,7 +68,7 @@
                                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-lightgray">
+                            <tbody class="divide-y divide-lightgray overflow">
                                 <tr th:each="reservation : ${allReservations}" >
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.user.getUsername() ?: 'N/A'}"></td>
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.trainName ?: 'N/A'}"></td>
@@ -78,7 +78,7 @@
                                     <td class="px-4 py-3 text-sm" th:text="${reservation.reservationDate ?: 'N/A'}"></td>
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.destinationFrom ?: 'N/A'}"></td>
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.destinationTo ?: 'N/A'}"></td>
-                                    <td class="px-4 space-x-4 py-3 text-sm">
+                                    <td class="relative px-4 space-x-4 py-3 text-sm whitespace-nowrap">
                                         <button th:disabled="${reservation.user.getId() != user.getId()}"
                                                 th:id="'edit-reservation-'+${reservation.getId()}"
                                                 th:onclick="'showEditModal('+${reservation.getId()}+')'"
@@ -86,13 +86,33 @@
                                             <ion-icon class="text-lg" name="create-outline"></ion-icon>
                                         </button>
                                         <button th:disabled="${reservation.user.getId() != user.getId()}"
+                                                th:onclick="'showDeletePrompt('+${reservation.getId()}+', this)'"
                                                 class="disabled:cursor-not-allowed text-red-500 hover:text-red-700">
                                             <ion-icon class="text-lg outline-0" name="trash-outline"></ion-icon>
                                         </button>
+                                        <div th:id="'delete-prompt-'+${reservation.getId()}"
+                                             class="hidden delete-prompt absolute bg-gray-100 py-2 space-y-2 z-10 right-3 text-xs rounded-2xl">
+                                            <p class="text-center font-medium px-4 text-textColor">Are you sure?</p>
+                                            <hr style="color: #ffffff" class="h-1 bg-white" />
+                                            <div class="flex item-center px-4 space-x-5">
+                                                <span th:onclick="'closePrompt('+${reservation.getId()}+')'"
+                                                      class="block text-white bg-danger rounded px-1 py-0.5 cursor-pointer">Cancel</span>
+                                                <form th:action="@{/app/reservation/delete/{id}(id=${reservation.getId()})}" method="post">
+                                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                                    <input type="hidden" name="_method" value="delete">
+                                                    <button type="submit"
+                                                          class="block text-white bg-primary rounded px-1 py-0.5 cursor-pointer">Continue
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                          <p th:if="${noOfReservations < 1}"
+                             class="text-sm text-center pt-10 pb-4">-- No record. Be the first to book! --
+                          </p>
                     </div>
                 </div>
             </div>
@@ -280,6 +300,23 @@
         e.preventDefault();
         editReservationModal.classList.add("hidden");
         window.location.href = "/app";
+    }
+    function showDeletePrompt(reservationId, element) {
+        let visiblePrompts = document.querySelectorAll('.delete-prompt:not(.hidden)');
+        visiblePrompts.forEach(prompt => {prompt.classList.add("hidden")});
+        let promptCard = document.getElementById("delete-prompt-"+reservationId);
+        promptCard.classList.remove("hidden");
+
+        document.addEventListener("click", function closePromptOnClickOutside(event) {
+            if (!promptCard.contains(event.target) && !element.contains(event.target)) {
+                promptCard.classList.add("hidden");
+                document.removeEventListener("click", closePromptOnClickOutside);
+            }
+        })
+    }
+    function closePrompt(reservationId) {
+        let promptCard = document.getElementById("delete-prompt-"+reservationId);
+        promptCard.classList.add("hidden");
     }
 
     if (reservationErrors) {

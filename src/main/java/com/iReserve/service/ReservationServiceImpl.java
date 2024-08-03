@@ -5,6 +5,7 @@ import com.iReserve.entity.Reservation;
 import com.iReserve.entity.User;
 import com.iReserve.repository.ReservationRepository;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,8 +46,9 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public String deleteReservation(Long id) {
-        reservationRepository.deleteById(id);
+        reservationRepository.deleteReservationById(id);
         return "Reservation deleted successfully!";
     }
 
