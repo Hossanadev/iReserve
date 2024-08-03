@@ -85,7 +85,8 @@
                                                 class="disabled:cursor-not-allowed text-blue-500 outline-0 hover:text-blue-700">
                                             <ion-icon class="text-lg" name="create-outline"></ion-icon>
                                         </button>
-                                        <button class="text-red-500 hover:text-red-700">
+                                        <button th:disabled="${reservation.user.getId() != user.getId()}"
+                                                class="disabled:cursor-not-allowed text-red-500 hover:text-red-700">
                                             <ion-icon class="text-lg outline-0" name="trash-outline"></ion-icon>
                                         </button>
                                     </td>
