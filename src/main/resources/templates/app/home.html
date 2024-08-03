@@ -68,8 +68,8 @@
                                     <th class="px-4 py-2 text-left text-sm font-semibold text-gray-700">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody th:each="reservation : ${allReservations}">
-                                <tr class="border-b border-lightgray">
+                            <tbody class="divide-y divide-lightgray">
+                                <tr th:each="reservation : ${allReservations}" >
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.user.getUsername() ?: 'N/A'}"></td>
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.trainName ?: 'N/A'}"></td>
                                     <td class="px-4 py-3 text-sm" th:text="${reservation.trainNumber ?: 'N/A'}"></td>
@@ -79,11 +79,13 @@
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.destinationFrom ?: 'N/A'}"></td>
                                     <td class="px-4 py-3 text-sm capitalize" th:text="${reservation.destinationTo ?: 'N/A'}"></td>
                                     <td class="px-4 space-x-4 py-3 text-sm">
-                                        <button class="text-blue-500 hover:text-blue-700">
+                                        <button th:id="'edit-reservation-'+${reservation.getId()}"
+                                                th:onclick="'showEditModal('+${reservation.getId()}+')'"
+                                                class="text-blue-500 outline-0 hover:text-blue-700">
                                             <ion-icon title="Edit" class="text-lg" name="create-outline"></ion-icon>
                                         </button>
                                         <button class="text-red-500 hover:text-red-700">
-                                            <ion-icon title="Cancel" class="text-lg" name="trash-outline"></ion-icon>
+                                            <ion-icon title="Cancel" class="text-lg outline-0" name="trash-outline"></ion-icon>
                                         </button>
                                     </td>
                                 </tr>
@@ -111,7 +113,7 @@
                 <div class="shadow-sm rounded-b-3xl p-6 block relative">
                     <form th:action="@{/app/reservation/create}" th:method="post" th:object="${reservationDto}" autocomplete="off" class="sm:grid grid-cols-2 max-sm:space-y-3 sm:gap-3 w-full">
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
-                        <span class="hidden" id="reservation-errors" th:if="${#fields.hasAnyErrors()}"></span>
+                        <span class="hidden" id="reservation-errors" th:if="${#fields.hasAnyErrors() && !editReservation}"></span>
                         <div>
                             <label for="booked-by" class="block text-sm font-medium text-gray-700 w-fit">Booked by*</label>
                             <input disabled type="text" id="booked-by" placeholder="Train name" th:value="${user.username}"
@@ -166,18 +168,85 @@
                 </div>
             </div>
         </div>
+        <div id="edit-reservation-modal" style="color: #696969; background-color: #19191940; border-color: #292929"
+             class="hidden text-sm modal fixed inset-0 bg-opacity-10 backdrop-filter backdrop-blur-md border border-opacity-30 flex items-center justify-center z-30">
+            <div style="min-height: fit-content; background-color: #fafafa" class="w-[80%] md:w-2/3 2xl:w-1/3 relative rounded-3xl shadow-sm border border-gray-7">
+                <p class="text-xl text-primary font-medium text-center opacity-100 my-4">Edit Reservation</p>
+                <hr style="color: #292929" class="h-1" />
+                <div class="shadow-sm rounded-b-3xl p-6 block relative">
+                    <form id="edit-reservation-form" th:method="post" th:object="${reservationDto}" autocomplete="off" class="sm:grid grid-cols-2 max-sm:space-y-3 sm:gap-3 w-full">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <span class="hidden" id="edit-reservation-errors" th:if="${#fields.hasAnyErrors() && editReservation}"></span>
+                        <div>
+                            <label for="edit-booked-by" class="block text-sm font-medium text-gray-700 w-fit">Booked by*</label>
+                            <input disabled type="text" id="edit-booked-by" placeholder="Train name" th:value="${user.username}"
+                                   class="mt-1 block w-full px-3 py-3 border bg-white cursor-not-allowed capitalize border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                        </div>
+                        <div>
+                            <label for="edit-train-name" class="block text-sm font-medium text-gray-700 w-fit">Train name*</label>
+                            <input type="text" id="edit-train-name" th:field="*{trainName}" th:value="${reservationDto.trainName}" placeholder="Train name" name="trainName"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('trainName')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{trainName}"></span>
+                        </div>
+                        <div>
+                            <label for="edit-trainNumber" class="block text-sm font-medium text-gray-700 w-fit">Train number*</label>
+                            <input type="text" placeholder="Train number" th:field="*{trainNumber}" th:value="${reservationDto.trainNumber}" id="edit-trainNumber" name="trainNumber"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('trainNumber')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{trainNumber}"></span>
+                        </div>
+                        <div>
+                            <label for="edit-seatNumber" class="block text-sm font-medium text-gray-700 w-fit">Seat number*</label>
+                            <input type="text" placeholder="Seat number" th:field="*{seatNumber}" th:value="${reservationDto.seatNumber}" id="edit-seatNumber" name="seatNumber"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('seatNumber')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{seatNumber}"></span>
+                        </div>
+                        <div>
+                            <label for="edit-reservationClass" class="block text-sm font-medium text-gray-700 w-fit">Reservation class*</label>
+                            <input type="text" placeholder="Reservation class" th:field="*{reservationClass}" th:value="${reservationDto.reservationClass}" id="edit-reservationClass" name="reservationClass"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('reservationClass')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{reservationClass}"></span>
+                        </div>
+                        <div>
+                            <label for="edit-reservationDate" class="block text-sm font-medium text-gray-700 w-fit">Reservation date*</label>
+                            <input type="date" placeholder="Reservation date" th:field="*{reservationDate}" th:value="${reservationDto.reservationDate}" id="edit-reservationDate" name="reservationDate"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('reservationDate')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{reservationDate}"></span>
+                        </div>
+                        <div>
+                            <label for="edit-destinationFrom" class="block text-sm font-medium text-gray-700 w-fit">Destination from*</label>
+                            <input type="text" placeholder="Destination from" th:field="*{destinationFrom}" th:value="${reservationDto.destinationFrom}" id="edit-destinationFrom" name="destinationFrom"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('destinationFrom')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{destinationFrom}"></span>
+                        </div>
+                        <div class="pb-8">
+                            <label for="edit-destinationTo" class="block text-sm font-medium text-gray-700 w-fit">Destination to*</label>
+                            <input type="text" placeholder="Destination to" th:field="*{destinationTo}" th:value="${reservationDto.destinationTo}" id="edit-destinationTo" name="destinationTo"
+                                   class="mt-1 block w-full px-3 py-3 border border-[#292929]/20 rounded-md focus:outline-none focus:ring-primary focus:border-primary sm:text-sm">
+                            <span th:if="${#fields.hasErrors('destinationTo')}" class="block mt-1 text-[12px] text-start text-red-600" th:errors="*{destinationTo}"></span>
+                        </div>
+                        <button id="close-edit-reservation-modal-btn" type="button" class="text-md block absolute bottom-0 left-0 w-fit bg-red-500 text-white inline-flex justify-center rounded-bl-3xl rounded-tr-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-red-600 font-medium text-md">Cancel</button>
+                        <button type="submit" class="text-md block absolute bottom-0 right-0 w-fit bg-primary text-white inline-flex justify-center rounded-br-3xl rounded-tl-3xl px-10 py-2 focus:ring-2 focus:ring-offset-2 focus:ring-primary font-medium text-md">Update</button>
+                    </form>
+                    <hr style="color: #292929" class="h-1 pb-10 -mx-6" />
+                </div>
+            </div>
+        </div>
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     </body>
 </html>
 <script>
-    const addReservationBtn = document.getElementById("add-reservation-btn");
-    const reservationModal = document.getElementById("reservation-modal");
-    const closeReservationModalBtn = document.getElementById("close-reservation-modal-btn");
-    const reservationErrors = document.getElementById("reservation-errors");
+    let addReservationBtn = document.getElementById("add-reservation-btn");
+    let reservationModal = document.getElementById("reservation-modal");
+    let closeReservationModalBtn = document.getElementById("close-reservation-modal-btn");
+    let reservationErrors = document.getElementById("reservation-errors");
+    let editReservationModal = document.getElementById("edit-reservation-modal");
+    let editReservationErrors = document.getElementById("edit-reservation-errors");
+    let closeEditReservationModalBtn = document.getElementById("close-edit-reservation-modal-btn");
 
     addReservationBtn.addEventListener("click", showReservationModal);
     closeReservationModalBtn.addEventListener("click", closeReservationModal);
+    closeEditReservationModalBtn.addEventListener("click", closeEditReservationModal);
 
     function showReservationModal(e) {
         e.preventDefault();
@@ -186,9 +255,35 @@
     function closeReservationModal(e) {
         e.preventDefault();
         reservationModal.classList.add("hidden");
+        window.location.href = "/app";
+    }
+    function showEditModal(reservationId){
+        fetch(`/api/reservation/${reservationId}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('edit-train-name').value = data.trainName || '';
+                document.getElementById('edit-trainNumber').value = data.trainNumber || '';
+                document.getElementById('edit-seatNumber').value = data.seatNumber || '';
+                document.getElementById('edit-reservationClass').value = data.reservationClass || '';
+                document.getElementById('edit-reservationDate').value = data.reservationDate || '';
+                document.getElementById('edit-destinationFrom').value = data.destinationFrom || '';
+                document.getElementById('edit-destinationTo').value = data.destinationTo || '';
+                editReservationModal.classList.remove("hidden");
+                const editForm = document.getElementById('edit-reservation-form');
+                editForm.action = `/app/reservation/edit/${reservationId}`;
+            })
+            .catch(error => console.error('Error fetching reservation data:', error));
+    }
+    function closeEditReservationModal(e) {
+        e.preventDefault();
+        editReservationModal.classList.add("hidden");
+        window.location.href = "/app";
     }
 
     if (reservationErrors) {
         reservationModal.classList.remove("hidden");
+    }
+    if (editReservationErrors) {
+        editReservationModal.classList.remove("hidden");
     }
 </script>

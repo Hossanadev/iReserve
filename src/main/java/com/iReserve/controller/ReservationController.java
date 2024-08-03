@@ -9,9 +9,7 @@ import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Calendar;
 
@@ -38,10 +36,25 @@ public class ReservationController {
     @PostMapping("/reservation/create")
     public String createReservation(@Valid ReservationDto reservationDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("editReservation", false);
             updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
             return "app/home";
         }
         reservationServiceImpl.createReservation(reservationDto);
+        updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
+        return "redirect:/app";
+    }
+
+    @PostMapping("/reservation/edit/{reservationId}")
+    public String editReservation(@Valid ReservationDto reservationDto, BindingResult bindingResult, Model model,
+                                  @PathVariable Long reservationId) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("editReservation", true);
+            updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
+            return "app/home";
+        }
+        reservationServiceImpl.updateReservation(reservationDto, reservationId);
+        model.addAttribute("editReservation", false);
         updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
         return "redirect:/app";
     }
