@@ -2,8 +2,8 @@ package com.iReserve.controller;
 
 import com.iReserve.dto.ReservationDto;
 import com.iReserve.entity.User;
-import com.iReserve.service.ReservationServiceImpl;
-import com.iReserve.service.UserServiceImpl;
+import com.iReserve.service.ReservationService;
+import com.iReserve.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -17,19 +17,19 @@ import java.util.Calendar;
 @RequestMapping("/app")
 public class ReservationController {
     private final HttpSession httpSession;
-    private final ReservationServiceImpl reservationServiceImpl;
-    private final UserServiceImpl userServiceImpl;
+    private final ReservationService reservationService;
+    private final UserService userService;
 
-    public ReservationController(HttpSession httpSession, ReservationServiceImpl reservationServiceImpl,
-                                 UserServiceImpl userServiceImpl) {
+    public ReservationController(HttpSession httpSession, ReservationService reservationService,
+                                 UserService userService) {
         this.httpSession = httpSession;
-        this.reservationServiceImpl = reservationServiceImpl;
-        this.userServiceImpl = userServiceImpl;
+        this.reservationService = reservationService;
+        this.userService = userService;
     }
 
     @GetMapping("")
     public String index(Model model) {
-        updateUI(reservationServiceImpl, userServiceImpl, new ReservationDto(), model);
+        updateUI(reservationService, userService, new ReservationDto(), model);
         return "app/home";
     }
 
@@ -37,11 +37,11 @@ public class ReservationController {
     public String createReservation(@Valid ReservationDto reservationDto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("editReservation", false);
-            updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
+            updateUI(reservationService, userService, reservationDto, model);
             return "app/home";
         }
-        reservationServiceImpl.createReservation(reservationDto);
-        updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
+        reservationService.createReservation(reservationDto);
+        updateUI(reservationService, userService, reservationDto, model);
         return "redirect:/app";
     }
 
@@ -50,30 +50,30 @@ public class ReservationController {
                                   @PathVariable Long reservationId) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("editReservation", true);
-            updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
+            updateUI(reservationService, userService, reservationDto, model);
             return "app/home";
         }
-        reservationServiceImpl.updateReservation(reservationDto, reservationId);
+        reservationService.updateReservation(reservationDto, reservationId);
         model.addAttribute("editReservation", false);
-        updateUI(reservationServiceImpl, userServiceImpl, reservationDto, model);
+        updateUI(reservationService, userService, reservationDto, model);
         return "redirect:/app";
     }
 
     @PostMapping("/reservation/delete/{id}")
     public String deleteReservation(@PathVariable Long id, Model model) {
-        reservationServiceImpl.deleteReservation(id);
-        updateUI(reservationServiceImpl, userServiceImpl, new ReservationDto(), model);
+        reservationService.deleteReservation(id);
+        updateUI(reservationService, userService, new ReservationDto(), model);
         return "redirect:/app";
     }
 
-    public void updateUI(ReservationServiceImpl reservationServiceImpl, UserServiceImpl userServiceImpl, ReservationDto reservationDto, Model model) {
+    public void updateUI(ReservationService reservationService, UserService userService, ReservationDto reservationDto, Model model) {
         User user = (User) httpSession.getAttribute("user");
         model.addAttribute("user", user);
-        model.addAttribute("noOfUsers", userServiceImpl.findAllUsers().size());
-        model.addAttribute("noOfReservations", reservationServiceImpl.getAllReservations().size());
+        model.addAttribute("noOfUsers", userService.findAllUsers().size());
+        model.addAttribute("noOfReservations", reservationService.getAllReservations().size());
         model.addAttribute("reservationDto", reservationDto);
-        model.addAttribute("allReservations", reservationServiceImpl.getAllReservations());
-        model.addAttribute("myReservations", reservationServiceImpl.getReservationById(user.getId()));
+        model.addAttribute("allReservations", reservationService.getAllReservations());
+        model.addAttribute("myReservations", reservationService.getReservationById(user.getId()));
         model.addAttribute("greetings", greetings());
     }
 

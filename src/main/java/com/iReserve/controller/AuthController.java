@@ -2,7 +2,7 @@ package com.iReserve.controller;
 
 import com.iReserve.dto.UserDto;
 import com.iReserve.entity.User;
-import com.iReserve.service.UserServiceImpl;
+import com.iReserve.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 public class AuthController {
     private final HttpSession httpSession;
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
 
     @Autowired
-    public AuthController(UserServiceImpl userServiceImpl, HttpSession httpSession) {
-        this.userServiceImpl = userServiceImpl;
+    public AuthController(UserService userService, HttpSession httpSession) {
+        this.userService = userService;
         this.httpSession = httpSession;
     }
 
@@ -43,7 +43,7 @@ public class AuthController {
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "index";
         }
-        String message = userServiceImpl.createUser(userDto);
+        String message = userService.createUser(userDto);
         model.addAttribute("message", message);
         return "index";
     }
