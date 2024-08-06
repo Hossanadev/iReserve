@@ -15,4 +15,4 @@ WORKDIR /app
 
 COPY --from=build /app/target/iReserve-0.0.1-SNAPSHOT.jar /app/ireserve.jar
 
-CMD ["java", "-jar", "/app/ireserve.jar"]
+ENTRYPOINT ["java", "-jar", "/app/ireserve.jar"]
