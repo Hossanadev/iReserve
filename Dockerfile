@@ -15,6 +15,4 @@ WORKDIR /app
 
 COPY --from=build /app/target/iReserve-0.0.1-SNAPSHOT.jar /app/ireserve.jar
 
-EXPOSE 8080
-
 CMD ["java", "-jar", "/app/ireserve.jar"]
